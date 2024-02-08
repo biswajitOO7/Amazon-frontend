@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import UserContext from '../context/UserContext'
 
 export default function Main() {
     
@@ -16,6 +17,23 @@ export default function Main() {
       const result = await axios.get("http://localhost:8080/users")
       setUsers(result.data)
     }
+
+    const { setUser } = useContext(UserContext);
+    const addCart = async (user) => {
+      console.log(user.product_name)
+      try{
+        const response = await axios.post('http://localhost:8080/cart',{
+          product_name:user.product_name,
+          product_type:user.product_type,
+          product_color:user.product_color,
+          product_price:user.product_price,
+        });
+        console.log('Product added to MySql',response.data);
+        setUser(response.data.id);
+      }catch(error){
+        console.error('Error saving product:',error);
+      }
+    }
   
   return (
     <div className='h-screen flex items-center justify-center'>
@@ -27,7 +45,7 @@ export default function Main() {
         className="h-[200px] w-full rounded-md object-cover"
       />
       <div className="p-4">
-        <h1 className="text-lg font-semibold">User Details</h1>
+        <h1 className="text-lg font-semibold">Product Details</h1>
         <p className="mt-3 text-sm text-gray-600">
          Details of user id: <span className='text-grey-600'>{user.id}</span>
         </p>
@@ -47,8 +65,9 @@ export default function Main() {
           type="button"
           to="/admin"
           className="mt-4 rounded-sm bg-black px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          onClick={()=>addCart(user)}
         >
-          Back to home
+          Add to Cart
         </Link>
       </div>
     </div>

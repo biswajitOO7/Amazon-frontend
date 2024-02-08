@@ -9,6 +9,7 @@ import ViewUser from './components/ViewUser.jsx'
 import './index.css'
 import Admin from './Admin.jsx'
 import Main from './components/Main.jsx'
+import Checkout from './components/Checkout.jsx'
 
 
 
@@ -18,11 +19,13 @@ const router = createBrowserRouter(
     <Route path='/' element={<App/>}>
       <Route path='' element={<Main/>} />
     </Route>
+      <Route path='/checkout' element={<Checkout/>}/>
     <Route path='/admin' element={<Admin/>}>
     <Route path='' element={<Table/>}/>
       <Route path='/admin/adduser' element={<AddUser/>}/>
       <Route path='/admin/edituser/:id' element={<EditUser/>}/>
       <Route path='/admin/viewuser/:id' element={<ViewUser/>}/>
+     
     </Route>
     </>
   )
