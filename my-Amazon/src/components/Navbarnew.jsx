@@ -2,8 +2,10 @@
 
 import React, { useContext } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
-import { Link, useParams } from 'react-router-dom'
+import { Link,} from 'react-router-dom'
 import UserContext from "../context/UserContext";
+
+
 
 
 const menuItems = [
@@ -20,15 +22,11 @@ const menuItems = [
     href: "#",
   },
 ];
-const onSubmit = async (e)=>{
-  e.preventDefault();
-  //await axios.put(`http://localhost:8080/user/${id}`, user)
-  navigation("/checkout")
-}
 
 export default function Navbarnew() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { user } =  useContext(UserContext)
+
+   const {user} = useContext(UserContext)
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -83,12 +81,11 @@ export default function Navbarnew() {
           Search
         </button>
         <Link
-          type="button"
-          to="/checkout"
-          className="mt-4 rounded-sm bg-black px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-        >
-          {user.id}
-          Cart
+        to='/checkout'>
+          <div className="tooltip">
+            <div className="tooltip-text z-50">{user}</div>
+            Cart
+          </div>
         </Link>
         <div className="ml-2 lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
