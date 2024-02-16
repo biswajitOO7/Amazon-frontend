@@ -1,7 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Link,} from 'react-router-dom'
+import UserContext from "../context/UserContext";
+
+
+
 
 const menuItems = [
   {
@@ -21,6 +26,7 @@ const menuItems = [
 export default function Navbarnew() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+   const {user} = useContext(UserContext)
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -74,6 +80,13 @@ export default function Navbarnew() {
         >
           Search
         </button>
+        <Link
+        to='/checkout'>
+          <div className="tooltip">
+            <div className="tooltip-text z-50">{user}</div>
+            Cart
+          </div>
+        </Link>
         <div className="ml-2 lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
         </div>
